@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>쿠팡 성공 전략 가이드 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --red: #C0392B;
+  --red-dark: #A93226;
+  --red-light: #F2D7D5;
+  --grey: #E8E8E8;
+  --grey-dark: #555;
+  --bg: #F5F5F5;
+  --white: #FFFFFF;
+  --dark: #1A1A2E;
+  --dark2: #16213E;
+  --text: #333;
+  --text-light: #666;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+  --radius: 12px;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+  color: white;
+  padding: 60px 20px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--red);
+}
+.header h1 {
+  font-size: 2.4rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+.header h1 span { color: var(--red); }
+.header .subtitle {
+  font-size: 1.1rem;
+  font-weight: 300;
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+.header .date {
+  font-size: 0.85rem;
+  opacity: 0.5;
+}
+
+/* TOC */
+.toc {
+  max-width: 900px;
+  margin: -30px auto 30px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px 32px;
+  position: relative;
+  z-index: 10;
+}
+.toc h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--red);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+}
+.toc a {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.toc a:hover {
+  background: var(--red-light);
+  color: var(--red);
+}
+.toc a .num {
+  color: var(--red);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* Main */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* Section Card */
+.section {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.section:hover { box-shadow: var(--shadow-hover); }
+.section-header {
+  padding: 24px 28px 20px;
+  border-bottom: 1px solid var(--grey);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-header .emoji { font-size: 1.6rem; }
+.section-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--dark);
+}
+.section-body { padding: 24px 28px 28px; }
+
+/* Subsection */
+.section-body h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 24px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--grey);
+}
+.section-body h3:first-child { margin-top: 0; }
+
+.section-body h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 18px 0 8px;
+}
+
+.section-body p { margin-bottom: 12px; }
+
+.section-body ul, .section-body ol {
+  margin: 8px 0 16px 20px;
+}
+.section-body li { margin-bottom: 6px; }
+
+/* Tip Box */
+.tip {
+  background: #E8F8F5;
+  border-left: 4px solid #27AE60;
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 16px 0;
+  font-size: 0.93rem;
+}
+.tip::before {
+  content: '💡 TIP';
+  display: block;
+  font-weight: 700;
+  color: #27AE60;
+  margin-bottom: 4px;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+}
+
+/* Warning Box */
+.warning {
+  background: #FDEDEC;
+  border-left: 4px solid var(--red);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  margin: 16px 0;
+  font-size: 0.93rem;
+}
+.warning::before {
+  content: '⚠️ WARNING';
+  display: block;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 4px;
+  font-size: 0.82rem;
+  letter-spacing: 1px;
+}
+
+/* Key Stat */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.stat-card {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+.stat-card .number {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #F39C12;
+  display: block;
+  line-height: 1.2;
+}
+.stat-card .label {
+  font-size: 0.82rem;
+  opacity: 0.8;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th {
+  background: var(--dark);
+  color: white;
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--grey);
+}
+tr:nth-child(even) td { background: #FAFAFA; }
+tr:hover td { background: var(--red-light); }
+th:first-child { border-radius: 8px 0 0 0; }
+th:last-child { border-radius: 0 8px 0 0; }
+
+/* Flow Diagram */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 20px 0;
+}
+.flow-step {
+  background: var(--dark);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+}
+.flow-arrow {
+  color: var(--red);
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+/* Info card */
+.info-card {
+  background: #F8F9FA;
+  border: 1px solid var(--grey);
+  border-radius: 10px;
+  padding: 18px;
+  margin: 14px 0;
+}
+.info-card .title {
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-light);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--grey);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Tag */
+.tag {
+  display: inline-block;
+  background: var(--red-light);
+  color: var(--red);
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin: 2px;
+}
+.tag.green { background: #E8F8F5; color: #27AE60; }
+.tag.blue { background: #EBF5FB; color: #2980B9; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header { padding: 40px 16px 36px; }
+  .header h1 { font-size: 1.7rem; }
+  .header .subtitle { font-size: 0.95rem; }
+  .toc { margin: -20px 16px 20px; padding: 20px; }
+  .toc-grid { grid-template-columns: 1fr; }
+  .container { padding: 0 12px 40px; }
+  .section-header { padding: 18px 20px 14px; }
+  .section-body { padding: 18px 20px 22px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  table { font-size: 0.82rem; }
+  th, td { padding: 8px 10px; }
+  .flow-step { font-size: 0.78rem; padding: 8px 12px; }
+}
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.4rem; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .stat-card .number { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <h1>쿠팡 <span>성공 전략</span> 가이드 2025</h1>
+  <p class="subtitle">쿠팡에서 살아남는 법 — 핵심 노하우 총정리</p>
+  <p class="date">2026년 3월 작성</p>
+</header>
+
+<!-- TOC -->
+<nav class="toc">
+  <h2>목차</h2>
+  <div class="toc-grid">
+    <a href="#algo"><span class="num">01</span> 알고리즘 &amp; 상위노출</a>
+    <a href="#ads"><span class="num">02</span> 광고 운영 (쿠팡애즈)</a>
+    <a href="#review"><span class="num">03</span> 리뷰 전략</a>
+    <a href="#optimize"><span class="num">04</span> 상품 최적화</a>
+    <a href="#fakebuy"><span class="num">05</span> 가구매 현황 &amp; 리스크</a>
+    <a href="#slot"><span class="num">06</span> 슬롯 광고</a>
+    <a href="#tools"><span class="num">07</span> 분석 도구</a>
+    <a href="#trend"><span class="num">08</span> 2025년 트렌드</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<!-- 1. 알고리즘 & 상위노출 -->
+<section class="section" id="algo">
+  <div class="section-header">
+    <span class="emoji">🔍</span>
+    <h2>알고리즘 &amp; 상위노출 원리</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>노출점수 시스템</h3>
+    <p>쿠팡은 내부 노출점수를 기반으로 검색 결과 순위를 결정합니다. <strong>80점 이상</strong>이면 상위노출 가능성이 크게 높아집니다.</p>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="number">80+</span>
+        <span class="label">상위노출 기준 점수</span>
+      </div>
+      <div class="stat-card">
+        <span class="number">+23%</span>
+        <span class="label">순위 1단계 상승 시 매출 증가</span>
+      </div>
+    </div>
+
+    <h4>노출점수 주요 구성 요소</h4>
+    <ul>
+      <li><strong>출고일</strong> — 짧을수록 유리 (로켓배송이 압도적 우위)</li>
+      <li><strong>상품점수</strong> — 필수정보 완성도, 이미지 품질, 상세페이지</li>
+      <li><strong>가격경쟁력</strong> — 동일 상품 대비 가격 포지션</li>
+    </ul>
+
+    <h3>알고리즘 4대 요소</h3>
+    <div class="stat-grid">
+      <div class="stat-card"><span class="number" style="font-size:1.2rem;">📁</span><span class="label">카테고리</span></div>
+      <div class="stat-card"><span class="number" style="font-size:1.2rem;">📝</span><span class="label">상품명</span></div>
+      <div class="stat-card"><span class="number" style="font-size:1.2rem;">🛒</span><span class="label">구매 옵션</span></div>
+      <div class="stat-card"><span class="number" style="font-size:1.2rem;">🏷️</span><span class="label">검색어 태그</span></div>
+    </div>
+
+    <h3>배송 유형 비교</h3>
+    <table>
+      <thead>
+        <tr><th>구분</th><th>로켓배송</th><th>로켓그로스</th><th>마켓플레이스</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>물류</td><td>쿠팡 풀필먼트</td><td>쿠팡 물류 일부 활용</td><td>셀러 자체 배송</td></tr>
+        <tr><td>배송 속도</td><td>당일/익일</td><td>2~3일</td><td>셀러별 상이</td></tr>
+        <tr><td>노출 우위</td><td>⭐⭐⭐</td><td>⭐⭐</td><td>⭐</td></tr>
+        <tr><td>수수료</td><td>높음</td><td>중간</td><td>낮음</td></tr>
+        <tr><td>적합 대상</td><td>대량·안정 판매</td><td>성장기 셀러</td><td>소량·테스트</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2025년 변화</h3>
+    <ul>
+      <li><strong>비검색 영역 경쟁력 부상</strong> — 추천 피드, 기획전 등 비검색 노출이 전체 트래픽의 40% 이상 차지</li>
+      <li><strong>실 구매 행동 데이터 중시</strong> — 클릭률, 전환율, 재구매율 등 실제 구매 행동 기반 알고리즘 고도화</li>
+    </ul>
+    <div class="tip">검색 키워드 순위뿐 아니라 추천 알고리즘 최적화도 병행해야 합니다. 클릭률(CTR)과 전환율을 꾸준히 모니터링하세요.</div>
+
+  </div>
+</section>
+
+<!-- 2. 광고 운영 -->
+<section class="section" id="ads">
+  <div class="section-header">
+    <span class="emoji">📣</span>
+    <h2>광고 운영 (쿠팡애즈)</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>자동 vs 수동 입찰</h3>
+    <table>
+      <thead>
+        <tr><th>구분</th><th>자동 입찰</th><th>수동 입찰</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>특징</td><td>AI 기반 자동 최적화</td><td>키워드별 직접 입찰가 설정</td></tr>
+        <tr><td>장점</td><td>운영 편의, 넓은 커버리지</td><td>정밀 제어, 비용 효율</td></tr>
+        <tr><td>단점</td><td>비용 과다 가능</td><td>운영 공수 높음</td></tr>
+        <tr><td>추천 비중</td><td><strong>60%</strong></td><td><strong>40%</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="tip">황금 비율 <strong>60:40</strong> (자동:수동)으로 시작한 뒤, 데이터가 쌓이면 수동 비중을 점진적으로 높이세요.</div>
+
+    <h3>골든타임 &amp; 핵심 지표</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="number">오후 6~9시</span>
+        <span class="label">골든타임 — 클릭 1.7배</span>
+      </div>
+      <div class="stat-card">
+        <span class="number">650%+</span>
+        <span class="label">ROAS 기준 → 알고리즘 가속</span>
+      </div>
+    </div>
+    <p>ROAS(광고 수익률)가 <strong>650% 이상</strong>이면 쿠팡 알고리즘이 해당 상품을 "잘 팔리는 상품"으로 인식하여 오가닉 노출까지 가속됩니다.</p>
+
+    <h3>광고 그룹 구조</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="number">20%</span>
+        <span class="label">브랜드 키워드</span>
+      </div>
+      <div class="stat-card">
+        <span class="number">30%</span>
+        <span class="label">상품 키워드</span>
+      </div>
+      <div class="stat-card">
+        <span class="number">50%</span>
+        <span class="label">카테고리 키워드</span>
+      </div>
+    </div>
+
+    <h3>키워드 전략</h3>
+    <table>
+      <thead>
+        <tr><th>유형</th><th>예시</th><th>특징</th><th>전략</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="tag">헤드</span></td><td>무선청소기</td><td>높은 검색량, 높은 경쟁</td><td>브랜드력 있을 때 공략</td></tr>
+        <tr><td><span class="tag blue">미들</span></td><td>무선청소기 가성비</td><td>적당한 검색량·경쟁</td><td>초기 진입 핵심</td></tr>
+        <tr><td><span class="tag green">롱테일</span></td><td>원룸 무선청소기 추천 가벼운</td><td>낮은 경쟁, 높은 전환율</td><td>수동 입찰로 정밀 공략</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>
+
+<!-- 3. 리뷰 전략 -->
+<section class="section" id="review">
+  <div class="section-header">
+    <span class="emoji">⭐</span>
+    <h2>리뷰 전략</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>합법적 리뷰 확보 방법</h3>
+    <ol>
+      <li><strong>쿠팡 공식 체험단</strong> — 쿠팡에서 운영하는 공식 체험단 프로그램 활용</li>
+      <li><strong>동봉 안내 카드</strong> — 제품 패키지에 리뷰 작성 안내 카드 동봉 (과도한 보상 금지)</li>
+      <li><strong>제품 품질 + CS 응대</strong> — 결국 좋은 리뷰의 핵심은 좋은 제품과 빠른 고객 응대</li>
+    </ol>
+
+    <h3>탑100 리뷰어 활용 (권위 리뷰)</h3>
+    <p>쿠팡 탑100 리뷰어의 리뷰는 상단 노출 우대를 받아 구매 전환에 큰 영향을 미칩니다.</p>
+
+    <div class="info-card">
+      <div class="title">쿠팡 탑100 리뷰어 서비스</div>
+      <p><strong>업체:</strong> 주식회사 디디하이브 (이서우 대표)</p>
+      <p><strong>연락처:</strong> 010-9824-8848</p>
+      <table>
+        <thead><tr><th>유형</th><th>단가 (건당)</th></tr></thead>
+        <tbody>
+          <tr><td>일반 리뷰</td><td><strong>3,000원</strong></td></tr>
+          <tr><td>탑 리뷰</td><td><strong>5,000원</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warning">모든 제품은 반드시 <strong>실제 배송</strong>이 이루어져야 합니다. 타사 제품을 직접 언급하는 것은 금지됩니다.</div>
+
+    <h3>물길리뷰 전략</h3>
+    <p>경쟁사 리뷰어를 자사 제품으로 리다이렉션하는 개념입니다. 경쟁 상품의 리뷰어들이 자연스럽게 자사 제품도 리뷰하도록 유도하는 전략으로, 체험단과 조합하면 효과적입니다.</p>
+
+    <h3>부정 리뷰 대응법</h3>
+    <ul>
+      <li>24시간 내 정중한 답변 필수</li>
+      <li>교환/환불 적극 대응 → 리뷰 수정 유도</li>
+      <li>허위·비방 리뷰는 쿠팡에 신고</li>
+      <li>부정 리뷰도 개선 기회로 활용 (상품 품질 피드백)</li>
+    </ul>
+    <div class="tip">리뷰 수보다 <strong>평점 4.5 이상 유지</strong>가 전환율에 더 큰 영향을 미칩니다. 낮은 평점 리뷰가 달리면 즉시 대응하세요.</div>
+
+  </div>
+</section>
+
+<!-- 4. 상품 최적화 -->
+<section class="section" id="optimize">
+  <div class="section-header">
+    <span class="emoji">🛒</span>
+    <h2>상품 최적화</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>제목 최적화</h3>
+    <p>핵심 키워드를 <strong>앞 20자 이내</strong>에 배치하는 것이 가장 중요합니다.</p>
+    <div class="info-card">
+      <div class="title">제목 공식</div>
+      <p><strong>[핵심 키워드] + [브랜드명] + [제품 특성] + [규격/수량]</strong></p>
+      <p style="color:var(--text-light); font-size:0.88rem;">예시: "무선청소기 브랜드X 경량형 2in1 물걸레 겸용 차이슨"</p>
+    </div>
+
+    <h3>검색어 태그 전략</h3>
+    <ul>
+      <li>총 <strong>20개</strong> 태그 사용 가능 → 모두 채울 것</li>
+      <li><strong>롱테일 키워드 위주</strong>로 배치 (경쟁 낮고 전환율 높음)</li>
+      <li>헤드 키워드는 제목에, 롱테일은 태그에 분산 배치</li>
+      <li>주기적으로 태그 성과 분석 후 교체</li>
+    </ul>
+
+    <h3>아이템위너 제도</h3>
+    <p>동일 상품을 여러 셀러가 판매할 때, 가격·배송·서비스 품질 기준으로 대표 셀러를 선정하는 제도입니다.</p>
+    <ul>
+      <li><strong>자동가격조정</strong> 기능 활용 — 경쟁사 대비 자동으로 가격 매칭</li>
+      <li>아이템위너 확보 시 해당 상품 페이지의 기본 판매자가 됨</li>
+      <li>가격 외에도 배송 속도, 판매자 등급이 영향</li>
+    </ul>
+
+    <h3>이미지 최적화</h3>
+    <table>
+      <thead><tr><th>항목</th><th>권장 기준</th></tr></thead>
+      <tbody>
+        <tr><td>배경</td><td>화이트 배경 (255, 255, 255)</td></tr>
+        <tr><td>해상도</td><td>1000px × 1000px 이상</td></tr>
+        <tr><td>메인 이미지</td><td>제품이 프레임의 85% 이상 차지</td></tr>
+        <tr><td>추가 이미지</td><td>사용 컷, 디테일 컷, 사이즈 정보 포함</td></tr>
+      </tbody>
+    </table>
+    <div class="tip">메인 이미지의 클릭률(CTR)이 검색 순위에 직접 영향을 미칩니다. A/B 테스트로 최적의 이미지를 찾으세요.</div>
+
+  </div>
+</section>
+
+<!-- 5. 가구매 현황 & 리스크 -->
+<section class="section" id="fakebuy">
+  <div class="section-header">
+    <span class="emoji">⚠️</span>
+    <h2>가구매 현황 &amp; 리스크</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>가구매란?</h3>
+    <p>실제 소비 목적이 아닌 판매 순위를 올리기 위해 자사 상품을 대량으로 구매하는 행위입니다. 쿠팡에서 공식적으로 금지하고 있으며, 적발 시 계정 정지 등의 제재가 가해집니다.</p>
+
+    <h3>탐지 수준 변화</h3>
+    <table>
+      <thead><tr><th>시기</th><th>탐지 수준</th><th>특징</th></tr></thead>
+      <tbody>
+        <tr><td>2019~2020</td><td><span class="tag green">낮음</span></td><td>대량 가구매 성행, 탐지 시스템 미비</td></tr>
+        <tr><td>2024~2025</td><td><span class="tag">높음</span></td><td>AI 기반 이상 거래 탐지, 패턴 분석 고도화</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning">
+      <strong>계정 정지 위험!</strong> 가구매 적발 시 판매자 계정이 영구 정지될 수 있으며, 정산 보류·위약금 부과까지 이어질 수 있습니다. 사업 자체가 중단될 수 있는 심각한 리스크입니다.
+    </div>
+
+    <h3>현재 가구매 현황</h3>
+    <div class="info-card">
+      <div class="title">✅ 실 가격 구매 방식 — 현재 효과 있음</div>
+      <ul>
+        <li>하루 <strong>1~20개</strong> 수준의 소량 구매</li>
+        <li><strong>100개 이상</strong> 누적 시 상위노출 효과 발생</li>
+        <li>단, 동일 배송지 반복 시 탐지 위험 매우 높음</li>
+      </ul>
+    </div>
+
+    <h3>합법적 대안</h3>
+    <ol>
+      <li><strong>공식 체험단</strong> — 쿠팡 공식 프로그램으로 실구매+리뷰 동시 확보</li>
+      <li><strong>초기 광고 집중</strong> — 런칭 초기 광고비를 집중 투자하여 판매량 확보</li>
+      <li><strong>외부 트래픽</strong> — SNS, 블로그, 유튜브에서 쿠팡 링크로 유입 유도</li>
+    </ol>
+    <div class="tip">장기적으로 가구매보다 <strong>체험단 + 초기 광고 집중</strong> 조합이 안전하고 지속 가능한 전략입니다.</div>
+
+  </div>
+</section>
+
+<!-- 6. 슬롯 광고 -->
+<section class="section" id="slot">
+  <div class="section-header">
+    <span class="emoji">🎯</span>
+    <h2>쿠팡 슬롯 광고</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>슬롯 광고란?</h3>
+    <p>특정 검색 키워드의 상위 노출 "슬롯"을 확보하여 해당 키워드 검색 시 상품이 상단에 노출되도록 하는 비공식적 마케팅 방식입니다.</p>
+
+    <h3>시그니쳐 슬롯</h3>
+    <ul>
+      <li>해당 키워드에만 순위 상승 효과</li>
+      <li>비교적 안정적인 노출 유지</li>
+      <li>특정 키워드 타겟팅에 효과적</li>
+    </ul>
+
+    <h3>실제 운영 효과</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="number">5~10개</span>
+        <span class="label">키워드 동시 운영 시</span>
+      </div>
+      <div class="stat-card">
+        <span class="number">1P 진입</span>
+        <span class="label">첫 페이지 상위노출 가능</span>
+      </div>
+    </div>
+    <p>5~10개씩 물린 키워드 기준으로 <strong>1페이지 진입</strong>이 가능한 것이 실제 운영 경험입니다.</p>
+
+    <div class="warning">
+      <strong>리스크 주의!</strong> 슬롯 광고는 쿠팡 공식 정책에 위반될 소지가 있으며, 장기적으로 지속하기 어렵습니다. 적발 시 불이익을 받을 수 있습니다.
+    </div>
+
+    <h3>2025년 전망</h3>
+    <p>쿠팡의 탐지 시스템 고도화로 슬롯 광고의 <strong>효과 감소 추세</strong>입니다. 공식 쿠팡애즈 광고로 전환하는 것을 권장합니다.</p>
+
+  </div>
+</section>
+
+<!-- 7. 분석 도구 -->
+<section class="section" id="tools">
+  <div class="section-header">
+    <span class="emoji">📊</span>
+    <h2>판매량 분석 도구</h2>
+  </div>
+  <div class="section-body">
+
+    <table>
+      <thead>
+        <tr><th>도구</th><th>주요 기능</th><th>특징</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>쿠파일럿</strong><br><span style="color:var(--text-light);font-size:0.8rem;">coupilot.net</span></td>
+          <td>키워드 분석</td>
+          <td>쿠팡 특화 키워드 리서치 도구</td>
+        </tr>
+        <tr>
+          <td><strong>아이템스카우트</strong><br><span style="color:var(--text-light);font-size:0.8rem;">itemscout.io</span></td>
+          <td>키워드 분석</td>
+          <td>키워드 검색량, 경쟁도 분석</td>
+        </tr>
+        <tr>
+          <td><strong>몰스코어</strong><br><span style="color:var(--text-light);font-size:0.8rem;">mallscore.co.kr</span></td>
+          <td>판매량 분석</td>
+          <td>경쟁사 판매량 추정</td>
+        </tr>
+        <tr>
+          <td><strong>순위 트래킹 툴</strong><br><span style="color:var(--text-light);font-size:0.8rem;">자체제작 · 월 3만원</span></td>
+          <td>순위 모니터링</td>
+          <td>실행사/대행사들이 탐내는 내부 툴</td>
+        </tr>
+        <tr>
+          <td><strong>SellDataLab</strong></td>
+          <td>판매량 분석</td>
+          <td>판매 데이터 종합 분석</td>
+        </tr>
+        <tr>
+          <td><strong>주디노</strong><br><span style="color:var(--text-light);font-size:0.8rem;">크몽</span></td>
+          <td>경쟁사 데이터</td>
+          <td>경쟁사 매출·판매량 분석</td>
+        </tr>
+        <tr>
+          <td><strong>SMART DATA</strong><br><span style="color:var(--text-light);font-size:0.8rem;">크롬 확장</span></td>
+          <td>실시간 데이터</td>
+          <td>크롬 브라우저에서 바로 분석</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tip">여러 도구를 병행 사용하여 <strong>교차 검증</strong>하는 것이 가장 정확합니다. 하나의 도구에만 의존하지 마세요.</div>
+
+  </div>
+</section>
+
+<!-- 8. 2025년 트렌드 -->
+<section class="section" id="trend">
+  <div class="section-header">
+    <span class="emoji">📈</span>
+    <h2>2025년 트렌드 &amp; 전략</h2>
+  </div>
+  <div class="section-body">
+
+    <h3>시장 현황</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="number">9,850억</span>
+        <span class="label">쿠팡 영업이익 (원)</span>
+      </div>
+      <div class="stat-card">
+        <span class="number">2,470만</span>
+        <span class="label">활성 고객 수</span>
+      </div>
+    </div>
+
+    <h3>로켓그로스 수수료 개편</h3>
+    <p>2025년부터 물류비가 <strong>6단계로 세분화</strong>되었습니다. 상품 크기·무게별로 차등 적용되므로, 단가 계산 시 반드시 확인이 필요합니다.</p>
+
+    <h3>2년 전 vs 2025년 전략 비교</h3>
+    <table>
+      <thead><tr><th>항목</th><th>2년 전</th><th>2025년</th></tr></thead>
+      <tbody>
+        <tr><td>노출 전략</td><td>가구매 + 키워드 스터핑</td><td>데이터 기반 최적화 + 공식 광고</td></tr>
+        <tr><td>광고</td><td>자동 입찰 위주</td><td>자동+수동 혼합 (60:40)</td></tr>
+        <tr><td>리뷰</td><td>대량 리뷰 확보</td><td>품질 리뷰 + 탑 리뷰어 활용</td></tr>
+        <tr><td>키워드</td><td>헤드 키워드 경쟁</td><td>롱테일 키워드 + 비검색 최적화</td></tr>
+        <tr><td>분석</td><td>감 기반 운영</td><td>분석 도구 병행 + 데이터 드리븐</td></tr>
+        <tr><td>리스크</td><td>탐지 낮음</td><td>AI 탐지 고도화, 정책 엄격화</td></tr>
+      </tbody>
+    </table>
+
+    <h3>성공 공식</h3>
+    <div class="flow">
+      <div class="flow-step">🏷️ 검색어 태그<br>최적화</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">🔎 저경쟁 키워드<br>발굴</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">⏰ 골든타임<br>광고</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">📊 ROAS<br>관리</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">⭐ 체험단<br>리뷰</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">🔄 데이터<br>최적화</div>
+    </div>
+
+    <div class="tip">이 사이클을 <strong>반복적으로 순환</strong>하는 것이 핵심입니다. 한 번에 모든 것을 완벽하게 하기보다, 빠르게 실행하고 데이터로 개선해 나가세요.</div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>이 가이드는 <strong>내부 자료</strong>로만 활용 가능합니다.</p>
+  <p style="margin-top:8px;">마지막 업데이트: 2026년 3월</p>
+</footer>
+
+</body>
+</html>
