@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>쿠팡 성공 전략 가이드 2025</title>
+<title>쿠팡 성공 전략 가이드 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -323,6 +324,179 @@ th:last-child { border-radius: 0 8px 0 0; }
 .tag.green { background: #E8F8F5; color: #27AE60; }
 .tag.blue { background: #EBF5FB; color: #2980B9; }
 
+/* Chart containers */
+.chart-wrap {
+  position: relative;
+  margin: 20px 0;
+}
+.chart-wrap canvas {
+  max-width: 100%;
+}
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 20px 0;
+  align-items: center;
+}
+.chart-label-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Score gauge */
+.gauge-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 16px 0;
+}
+.gauge-outer {
+  width: 160px;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+}
+.gauge-bg {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #E8E8E8 0deg 180deg
+  );
+  position: absolute;
+  top: 0; left: 0;
+}
+.gauge-fill {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0; left: 0;
+  background: conic-gradient(
+    #27AE60 0deg calc(var(--score) * 1.8deg),
+    #F39C12 calc(var(--score) * 1.8deg) calc(80 * 1.8deg),
+    var(--red) calc(80 * 1.8deg) 144deg,
+    transparent 144deg 360deg
+  );
+}
+.gauge-inner {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.gauge-value {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--dark);
+  line-height: 1;
+}
+.gauge-max {
+  font-size: 0.72rem;
+  color: var(--text-light);
+}
+.gauge-desc {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+/* Detection timeline */
+.timeline {
+  position: relative;
+  padding: 16px 0;
+  margin: 16px 0;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 80px;
+  top: 0; bottom: 0;
+  width: 3px;
+  background: var(--grey);
+}
+.tl-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.tl-year {
+  width: 80px;
+  text-align: right;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-light);
+  padding-top: 4px;
+  flex-shrink: 0;
+}
+.tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+  position: relative;
+  z-index: 1;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px var(--grey);
+}
+.tl-content {
+  flex: 1;
+  background: #F8F9FA;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.tl-content .tl-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.tl-content .tl-desc {
+  font-size: 0.83rem;
+  color: var(--text-light);
+  line-height: 1.5;
+}
+.risk-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.risk-bar-label {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  width: 48px;
+  flex-shrink: 0;
+}
+.risk-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--grey);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.risk-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .header { padding: 40px 16px 36px; }
@@ -337,6 +511,7 @@ th:last-child { border-radius: 0 8px 0 0; }
   table { font-size: 0.82rem; }
   th, td { padding: 8px 10px; }
   .flow-step { font-size: 0.78rem; padding: 8px 12px; }
+  .chart-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .header h1 { font-size: 1.4rem; }
@@ -349,7 +524,7 @@ th:last-child { border-radius: 0 8px 0 0; }
 
 <!-- Header -->
 <header class="header">
-  <h1>쿠팡 <span>성공 전략</span> 가이드 2025</h1>
+  <h1>쿠팡 <span>성공 전략</span> 가이드 2026</h1>
   <p class="subtitle">쿠팡에서 살아남는 법 — 핵심 노하우 총정리</p>
   <p class="date">2026년 3월 작성</p>
 </header>
@@ -365,7 +540,7 @@ th:last-child { border-radius: 0 8px 0 0; }
     <a href="#fakebuy"><span class="num">05</span> 가구매 현황 &amp; 리스크</a>
     <a href="#slot"><span class="num">06</span> 슬롯 광고</a>
     <a href="#tools"><span class="num">07</span> 분석 도구</a>
-    <a href="#trend"><span class="num">08</span> 2025년 트렌드</a>
+    <a href="#trend"><span class="num">08</span> 2026년 트렌드</a>
   </div>
 </nav>
 
@@ -381,6 +556,41 @@ th:last-child { border-radius: 0 8px 0 0; }
 
     <h3>노출점수 시스템</h3>
     <p>쿠팡은 내부 노출점수를 기반으로 검색 결과 순위를 결정합니다. <strong>80점 이상</strong>이면 상위노출 가능성이 크게 높아집니다.</p>
+
+    <!-- 노출점수 게이지 시각화 -->
+    <div style="display:flex; gap:24px; flex-wrap:wrap; justify-content:center; margin:20px 0;">
+      <div style="text-align:center;">
+        <div class="chart-label-title">노출점수 목표</div>
+        <div class="gauge-wrap">
+          <div class="gauge-outer">
+            <div class="gauge-bg"></div>
+            <div class="gauge-fill" style="--score:80;"></div>
+            <div class="gauge-inner">
+              <span class="gauge-value">80</span>
+              <span class="gauge-max">/ 100점</span>
+            </div>
+          </div>
+          <div class="gauge-desc">이 이상이면 상위노출 진입</div>
+        </div>
+      </div>
+      <div style="flex:1; min-width:220px; display:flex; align-items:center;">
+        <div style="width:100%;">
+          <div style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.83rem; margin-bottom:4px;"><span>출고 속도</span><span style="font-weight:700; color:#27AE60;">매우 높음</span></div>
+            <div style="height:8px; background:var(--grey); border-radius:4px;"><div style="width:95%; height:100%; background:#27AE60; border-radius:4px;"></div></div>
+          </div>
+          <div style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.83rem; margin-bottom:4px;"><span>상품점수 (콘텐츠)</span><span style="font-weight:700; color:#2980B9;">높음</span></div>
+            <div style="height:8px; background:var(--grey); border-radius:4px;"><div style="width:78%; height:100%; background:#2980B9; border-radius:4px;"></div></div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.83rem; margin-bottom:4px;"><span>가격경쟁력</span><span style="font-weight:700; color:#F39C12;">중간</span></div>
+            <div style="height:8px; background:var(--grey); border-radius:4px;"><div style="width:55%; height:100%; background:#F39C12; border-radius:4px;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="stat-grid">
       <div class="stat-card">
         <span class="number">80+</span>
@@ -391,13 +601,6 @@ th:last-child { border-radius: 0 8px 0 0; }
         <span class="label">순위 1단계 상승 시 매출 증가</span>
       </div>
     </div>
-
-    <h4>노출점수 주요 구성 요소</h4>
-    <ul>
-      <li><strong>출고일</strong> — 짧을수록 유리 (로켓배송이 압도적 우위)</li>
-      <li><strong>상품점수</strong> — 필수정보 완성도, 이미지 품질, 상세페이지</li>
-      <li><strong>가격경쟁력</strong> — 동일 상품 대비 가격 포지션</li>
-    </ul>
 
     <h3>알고리즘 4대 요소</h3>
     <div class="stat-grid">
@@ -421,7 +624,13 @@ th:last-child { border-radius: 0 8px 0 0; }
       </tbody>
     </table>
 
-    <h3>2025년 변화</h3>
+    <!-- 배송 유형 노출 우위 차트 -->
+    <div class="chart-wrap" style="max-height:200px;">
+      <div class="chart-label-title">배송 유형별 노출 우위 점수 (100점 기준)</div>
+      <canvas id="chartDelivery" height="120"></canvas>
+    </div>
+
+    <h3>2026년 변화</h3>
     <ul>
       <li><strong>비검색 영역 경쟁력 부상</strong> — 추천 피드, 기획전 등 비검색 노출이 전체 트래픽의 40% 이상 차지</li>
       <li><strong>실 구매 행동 데이터 중시</strong> — 클릭률, 전환율, 재구매율 등 실제 구매 행동 기반 알고리즘 고도화</li>
@@ -466,19 +675,44 @@ th:last-child { border-radius: 0 8px 0 0; }
     </div>
     <p>ROAS(광고 수익률)가 <strong>650% 이상</strong>이면 쿠팡 알고리즘이 해당 상품을 "잘 팔리는 상품"으로 인식하여 오가닉 노출까지 가속됩니다.</p>
 
+    <!-- 시간대별 클릭률 차트 -->
+    <div class="chart-wrap">
+      <div class="chart-label-title">시간대별 클릭 효율 지수 (골든타임 하이라이트)</div>
+      <canvas id="chartHourly" height="140"></canvas>
+    </div>
+
     <h3>광고 그룹 구조</h3>
-    <div class="stat-grid">
-      <div class="stat-card">
-        <span class="number">20%</span>
-        <span class="label">브랜드 키워드</span>
+
+    <!-- 광고 예산 배분 도넛 차트 -->
+    <div class="chart-row">
+      <div>
+        <div class="chart-label-title">광고 예산 배분</div>
+        <canvas id="chartAdBudget" height="200"></canvas>
       </div>
-      <div class="stat-card">
-        <span class="number">30%</span>
-        <span class="label">상품 키워드</span>
-      </div>
-      <div class="stat-card">
-        <span class="number">50%</span>
-        <span class="label">카테고리 키워드</span>
+      <div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:14px; height:14px; border-radius:3px; background:#C0392B; flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:700; font-size:0.9rem;">브랜드 키워드 <span style="color:var(--red);">20%</span></div>
+              <div style="font-size:0.8rem; color:var(--text-light);">브랜드명 직접 검색 방어</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:14px; height:14px; border-radius:3px; background:#2980B9; flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:700; font-size:0.9rem;">상품 키워드 <span style="color:#2980B9;">30%</span></div>
+              <div style="font-size:0.8rem; color:var(--text-light);">제품 특성 기반 키워드</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:14px; height:14px; border-radius:3px; background:#27AE60; flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:700; font-size:0.9rem;">카테고리 키워드 <span style="color:#27AE60;">50%</span></div>
+              <div style="font-size:0.8rem; color:var(--text-light);">신규 고객 유입, 가장 큰 비중</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -493,6 +727,12 @@ th:last-child { border-radius: 0 8px 0 0; }
         <tr><td><span class="tag green">롱테일</span></td><td>원룸 무선청소기 추천 가벼운</td><td>낮은 경쟁, 높은 전환율</td><td>수동 입찰로 정밀 공략</td></tr>
       </tbody>
     </table>
+
+    <!-- 키워드 유형별 경쟁도 vs 전환율 -->
+    <div class="chart-wrap">
+      <div class="chart-label-title">키워드 유형별 경쟁도 vs 전환율</div>
+      <canvas id="chartKeyword" height="140"></canvas>
+    </div>
 
   </div>
 </section>
@@ -528,6 +768,13 @@ th:last-child { border-radius: 0 8px 0 0; }
       </table>
     </div>
     <div class="warning">모든 제품은 반드시 <strong>실제 배송</strong>이 이루어져야 합니다. 타사 제품을 직접 언급하는 것은 금지됩니다.</div>
+
+    <h3>리뷰 평점이 전환율에 미치는 영향</h3>
+    <!-- 평점별 전환율 차트 -->
+    <div class="chart-wrap">
+      <div class="chart-label-title">평점 구간별 구매 전환율 지수 (4.5+ = 목표 기준)</div>
+      <canvas id="chartRating" height="130"></canvas>
+    </div>
 
     <h3>물길리뷰 전략</h3>
     <p>경쟁사 리뷰어를 자사 제품으로 리다이렉션하는 개념입니다. 경쟁 상품의 리뷰어들이 자연스럽게 자사 제품도 리뷰하도록 유도하는 전략으로, 체험단과 조합하면 효과적입니다.</p>
@@ -602,14 +849,45 @@ th:last-child { border-radius: 0 8px 0 0; }
     <h3>가구매란?</h3>
     <p>실제 소비 목적이 아닌 판매 순위를 올리기 위해 자사 상품을 대량으로 구매하는 행위입니다. 쿠팡에서 공식적으로 금지하고 있으며, 적발 시 계정 정지 등의 제재가 가해집니다.</p>
 
-    <h3>탐지 수준 변화</h3>
-    <table>
-      <thead><tr><th>시기</th><th>탐지 수준</th><th>특징</th></tr></thead>
-      <tbody>
-        <tr><td>2019~2020</td><td><span class="tag green">낮음</span></td><td>대량 가구매 성행, 탐지 시스템 미비</td></tr>
-        <tr><td>2024~2025</td><td><span class="tag">높음</span></td><td>AI 기반 이상 거래 탐지, 패턴 분석 고도화</td></tr>
-      </tbody>
-    </table>
+    <h3>탐지 수준 변화 타임라인</h3>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">2019~20</div>
+        <div class="tl-dot" style="background:#27AE60;"></div>
+        <div class="tl-content">
+          <div class="tl-title">🟢 탐지 낮음 — 성행기</div>
+          <div class="tl-desc">대량 가구매 일상화. 탐지 시스템 미비.</div>
+          <div class="risk-bar"><span class="risk-bar-label">적발위험</span><div class="risk-bar-track"><div class="risk-bar-fill" style="width:15%; background:#27AE60;"></div></div></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2021~22</div>
+        <div class="tl-dot" style="background:#F39C12;"></div>
+        <div class="tl-content">
+          <div class="tl-title">🟡 탐지 강화 시작</div>
+          <div class="tl-desc">패턴 기반 탐지 도입. 동일 배송지·IP 주의 시작.</div>
+          <div class="risk-bar"><span class="risk-bar-label">적발위험</span><div class="risk-bar-track"><div class="risk-bar-fill" style="width:45%; background:#F39C12;"></div></div></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2023~24</div>
+        <div class="tl-dot" style="background:#E67E22;"></div>
+        <div class="tl-content">
+          <div class="tl-title">🟠 AI 탐지 본격화</div>
+          <div class="tl-desc">머신러닝 기반 이상 거래 감지. 계정 정지 사례 급증.</div>
+          <div class="risk-bar"><span class="risk-bar-label">적발위험</span><div class="risk-bar-track"><div class="risk-bar-fill" style="width:70%; background:#E67E22;"></div></div></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2025~26</div>
+        <div class="tl-dot" style="background:#C0392B;"></div>
+        <div class="tl-content">
+          <div class="tl-title">🔴 탐지 고도화 — 현재</div>
+          <div class="tl-desc">행동 패턴 + 디바이스 지문 + 소셜 그래프 분석. 소량도 위험.</div>
+          <div class="risk-bar"><span class="risk-bar-label">적발위험</span><div class="risk-bar-track"><div class="risk-bar-fill" style="width:90%; background:#C0392B;"></div></div></div>
+        </div>
+      </div>
+    </div>
 
     <div class="warning">
       <strong>계정 정지 위험!</strong> 가구매 적발 시 판매자 계정이 영구 정지될 수 있으며, 정산 보류·위약금 부과까지 이어질 수 있습니다. 사업 자체가 중단될 수 있는 심각한 리스크입니다.
@@ -671,7 +949,7 @@ th:last-child { border-radius: 0 8px 0 0; }
       <strong>리스크 주의!</strong> 슬롯 광고는 쿠팡 공식 정책에 위반될 소지가 있으며, 장기적으로 지속하기 어렵습니다. 적발 시 불이익을 받을 수 있습니다.
     </div>
 
-    <h3>2025년 전망</h3>
+    <h3>2026년 전망</h3>
     <p>쿠팡의 탐지 시스템 고도화로 슬롯 광고의 <strong>효과 감소 추세</strong>입니다. 공식 쿠팡애즈 광고로 전환하는 것을 권장합니다.</p>
 
   </div>
@@ -728,16 +1006,22 @@ th:last-child { border-radius: 0 8px 0 0; }
       </tbody>
     </table>
 
+    <!-- 도구 카테고리 레이더 -->
+    <div class="chart-wrap" style="max-width:400px; margin:20px auto;">
+      <div class="chart-label-title">도구 유형별 커버리지</div>
+      <canvas id="chartTools" height="200"></canvas>
+    </div>
+
     <div class="tip">여러 도구를 병행 사용하여 <strong>교차 검증</strong>하는 것이 가장 정확합니다. 하나의 도구에만 의존하지 마세요.</div>
 
   </div>
 </section>
 
-<!-- 8. 2025년 트렌드 -->
+<!-- 8. 2026년 트렌드 -->
 <section class="section" id="trend">
   <div class="section-header">
     <span class="emoji">📈</span>
-    <h2>2025년 트렌드 &amp; 전략</h2>
+    <h2>2026년 트렌드 &amp; 전략</h2>
   </div>
   <div class="section-body">
 
@@ -753,12 +1037,18 @@ th:last-child { border-radius: 0 8px 0 0; }
       </div>
     </div>
 
-    <h3>로켓그로스 수수료 개편</h3>
-    <p>2025년부터 물류비가 <strong>6단계로 세분화</strong>되었습니다. 상품 크기·무게별로 차등 적용되므로, 단가 계산 시 반드시 확인이 필요합니다.</p>
+    <!-- 쿠팡 성장 차트 -->
+    <div class="chart-wrap">
+      <div class="chart-label-title">쿠팡 활성 고객 수 추이 (만 명)</div>
+      <canvas id="chartGrowth" height="130"></canvas>
+    </div>
 
-    <h3>2년 전 vs 2025년 전략 비교</h3>
+    <h3>로켓그로스 수수료 개편</h3>
+    <p>2026년에도 물류비가 <strong>6단계로 세분화</strong>된 체계가 유지됩니다. 상품 크기·무게별로 차등 적용되므로, 단가 계산 시 반드시 확인이 필요합니다.</p>
+
+    <h3>2~3년 전 vs 2026년 전략 비교</h3>
     <table>
-      <thead><tr><th>항목</th><th>2년 전</th><th>2025년</th></tr></thead>
+      <thead><tr><th>항목</th><th>2~3년 전</th><th>2026년</th></tr></thead>
       <tbody>
         <tr><td>노출 전략</td><td>가구매 + 키워드 스터핑</td><td>데이터 기반 최적화 + 공식 광고</td></tr>
         <tr><td>광고</td><td>자동 입찰 위주</td><td>자동+수동 혼합 (60:40)</td></tr>
@@ -796,6 +1086,222 @@ th:last-child { border-radius: 0 8px 0 0; }
   <p>이 가이드는 <strong>내부 자료</strong>로만 활용 가능합니다.</p>
   <p style="margin-top:8px;">마지막 업데이트: 2026년 3월</p>
 </footer>
+
+<script>
+Chart.defaults.font.family = "'Noto Sans KR', sans-serif";
+Chart.defaults.font.size = 12;
+
+// 1. 배송 유형 노출 우위 가로 막대
+new Chart(document.getElementById('chartDelivery'), {
+  type: 'bar',
+  data: {
+    labels: ['로켓배송', '로켓그로스', '마켓플레이스'],
+    datasets: [{
+      label: '노출 우위 점수',
+      data: [95, 65, 30],
+      backgroundColor: ['#C0392B', '#E67E22', '#BDC3C7'],
+      borderRadius: 6,
+      borderSkipped: false,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: ctx => ` ${ctx.raw}점 / 100` }
+      }
+    },
+    scales: {
+      x: { max: 100, grid: { color: '#F0F0F0' }, ticks: { callback: v => v + '점' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// 2. 시간대별 클릭 효율
+const hours = ['0시','2시','4시','6시','8시','10시','12시','14시','16시','18시','19시','20시','21시','22시'];
+const clicks = [20, 15, 12, 18, 45, 60, 72, 68, 75, 100, 115, 120, 105, 70];
+const bgColors = hours.map((h, i) => (i >= 9 && i <= 12) ? '#C0392B' : '#CBD3E0');
+new Chart(document.getElementById('chartHourly'), {
+  type: 'bar',
+  data: {
+    labels: hours,
+    datasets: [{
+      label: '클릭 효율 지수',
+      data: clicks,
+      backgroundColor: bgColors,
+      borderRadius: 4,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` 효율 ${ctx.raw}` } },
+      annotation: {}
+    },
+    scales: {
+      y: { grid: { color: '#F0F0F0' }, ticks: { display: false } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 3. 광고 예산 배분 도넛
+new Chart(document.getElementById('chartAdBudget'), {
+  type: 'doughnut',
+  data: {
+    labels: ['브랜드 키워드', '상품 키워드', '카테고리 키워드'],
+    datasets: [{
+      data: [20, 30, 50],
+      backgroundColor: ['#C0392B', '#2980B9', '#27AE60'],
+      borderWidth: 3,
+      borderColor: '#fff',
+      hoverOffset: 6
+    }]
+  },
+  options: {
+    cutout: '60%',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw}%` } }
+    }
+  }
+});
+
+// 4. 키워드 유형별 경쟁도 vs 전환율
+new Chart(document.getElementById('chartKeyword'), {
+  type: 'bar',
+  data: {
+    labels: ['헤드 키워드', '미들 키워드', '롱테일 키워드'],
+    datasets: [
+      {
+        label: '경쟁도',
+        data: [95, 55, 20],
+        backgroundColor: 'rgba(192,57,43,0.75)',
+        borderRadius: 4,
+      },
+      {
+        label: '전환율 지수',
+        data: [30, 60, 85],
+        backgroundColor: 'rgba(39,174,96,0.75)',
+        borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top' },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}` } }
+    },
+    scales: {
+      y: { max: 100, grid: { color: '#F0F0F0' }, ticks: { callback: v => v } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 5. 리뷰 평점별 전환율
+new Chart(document.getElementById('chartRating'), {
+  type: 'bar',
+  data: {
+    labels: ['1~2점', '2~3점', '3~4점', '4~4.5점', '4.5~5점'],
+    datasets: [{
+      label: '전환율 지수',
+      data: [8, 22, 48, 78, 100],
+      backgroundColor: ['#E74C3C','#E67E22','#F1C40F','#2ECC71','#27AE60'],
+      borderRadius: 6,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` 전환율 지수: ${ctx.raw}` } }
+    },
+    scales: {
+      y: { max: 110, grid: { color: '#F0F0F0' }, ticks: { display: false } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// 6. 분석 도구 레이더
+new Chart(document.getElementById('chartTools'), {
+  type: 'radar',
+  data: {
+    labels: ['키워드 분석', '경쟁사 추적', '순위 모니터링', '판매량 추정', '실시간 데이터'],
+    datasets: [
+      {
+        label: '쿠파일럿',
+        data: [95, 40, 60, 50, 55],
+        borderColor: '#C0392B',
+        backgroundColor: 'rgba(192,57,43,0.1)',
+        pointBackgroundColor: '#C0392B',
+      },
+      {
+        label: '아이템스카우트',
+        data: [90, 60, 70, 65, 60],
+        borderColor: '#2980B9',
+        backgroundColor: 'rgba(41,128,185,0.1)',
+        pointBackgroundColor: '#2980B9',
+      },
+      {
+        label: '몰스코어',
+        data: [50, 80, 65, 90, 55],
+        borderColor: '#27AE60',
+        backgroundColor: 'rgba(39,174,96,0.1)',
+        pointBackgroundColor: '#27AE60',
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } },
+    scales: {
+      r: {
+        min: 0, max: 100,
+        ticks: { display: false },
+        grid: { color: '#EBEBEB' },
+        pointLabels: { font: { size: 11 } }
+      }
+    }
+  }
+});
+
+// 7. 쿠팡 활성 고객 성장 차트
+new Chart(document.getElementById('chartGrowth'), {
+  type: 'line',
+  data: {
+    labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026(E)'],
+    datasets: [{
+      label: '활성 고객 수 (만 명)',
+      data: [1480, 1699, 1800, 2100, 2300, 2470, 2650],
+      borderColor: '#C0392B',
+      backgroundColor: 'rgba(192,57,43,0.08)',
+      fill: true,
+      tension: 0.4,
+      pointBackgroundColor: '#C0392B',
+      pointRadius: 5,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.raw.toLocaleString()}만 명` } }
+    },
+    scales: {
+      y: { grid: { color: '#F0F0F0' }, ticks: { callback: v => v + '만' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+</script>
 
 </body>
 </html>
